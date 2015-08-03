@@ -10,27 +10,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "canonical/trusty64"
   config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
-  config.vm.define "scm", primary: true do |scm|
+  config.vm.define "SCM", primary: true do |scm|
     scm.vm.provider "virtualbox" do |vb|
       vb.name = "SCM-APP1"
       vb.memory = 4096
       vb.cpus = 4
-      #vb.synced_folder "./shared_folders/server.scm/data", "/data", owner: "root", group: "root"
     end
-    
-    scm.vm.network :private_network, ip: "192.168.1.10"
-
+    scm.vm.network :private_network, ip: "192.168.1.80"
   end
 
   config.vm.provision "ansible" do |ansible|
-    # Ansible Inventory File 
-    ansible.groups = {
-      "scm-dbs" => ["db"],
-      "scm-apps" => ["scm"],
-      "all_groups:children" => ["dbs", "apps"]
-    }
-
-    # Ansible Playbook
     ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
   end
 
