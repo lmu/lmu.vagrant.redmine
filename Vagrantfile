@@ -42,14 +42,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    ansible.limit = "all"
 #    ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
     ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
     ansible.groups = {
       "redmine" => ["redmine2.verwaltung.uni-muenchen.de"]
     }
-    #ansible.start_at_task = "Create User"
+    #ansible.verbose = "vvvv"
     ansible.verbose = ""
+    #ansible.start_at_task = "Install Piwik"
+    ansible.limit = "all"
+    #ansible.tags = ["setup", "configuration", "update"]
+    #ansible.skip_tags = ["update"]
+    #ansible.ask_vault_pass = true
   end
 
 end
