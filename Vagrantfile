@@ -45,20 +45,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.provision "ansible" do |ansible|
-#    ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
-    ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
-    ansible.groups = {
-      "redmine" => ["redmine2.verwaltung.uni-muenchen.de"]
-    }
-    #ansible.verbose = "vvvv"
-    #ansible.verbose ="v"
-    #ansible.verbose = ""
-    #ansible.start_at_task = "Download Redmine to master"
-    ansible.limit = "all"
-    #ansible.tags = ["setup", "configuration", "update"]
-    #ansible.skip_tags = ["update"]
-    #ansible.ask_vault_pass = true
+  if ENV['OS'] != "Windows_NT"
+    config.vm.provision "ansible" do |ansible|
+      ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
+      ansible.groups = {
+        "redmine" => ["redmine2.verwaltung.uni-muenchen.de"]
+      }
+      #ansible.verbose = "vvvv"
+      #ansible.verbose = "vvv"
+      #ansible.verbose = "vv"
+      #ansible.verbose = "v"
+      #ansible.verbose = ""
+      #ansible.start_at_task = "Install Piwik"
+      ansible.limit = "all"
+      #ansible.tags = ["setup", "configuration", "update"]
+      #ansible.skip_tags = ["update"]
+      #ansible.ask_vault_pass = true
+    end
   end
-
 end
