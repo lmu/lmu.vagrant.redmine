@@ -19,12 +19,13 @@ AUTOSTART_INFRASTRUKTURE = false
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "ubuntu/trusty64"
+  #config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
   #Default hashicorp box
   #config.vm.box_url = "https://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box"
 
-  config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: true do |machine|
-    machine.vm.provider "virtualbox" do |vb|
+  config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: true do |node|
+    node.vm.provider "virtualbox" do |vb|
       vb.name = "Redmine2"
       vb.memory = 8192
       #vb.memory = 4096
@@ -36,12 +37,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
 
-    machine.vm.network "forwarded_port", guest: 3000, host: 3000
-    machine.vm.network "forwarded_port", guest: 3001, host: 3001
-    machine.vm.network "forwarded_port", guest: 9001, host: 9001
-    machine.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".80"
+    node.vm.network "forwarded_port", guest: 3000, host: 3000
+    node.vm.network "forwarded_port", guest: 3001, host: 3001
+    #node.vm.network "forwarded_port", guest: 5000, host: 5000
+    node.vm.network "forwarded_port", guest: 9001, host: 9001
+    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".80"
     if USE_PUBLIC_NETWORK
-      machine.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".80"
+      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".80"
     end
   end
 
@@ -54,10 +56,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #ansible.verbose = "vvvv"
       #ansible.verbose = "vvv"
       #ansible.verbose = "vv"
-      #ansible.verbose = "v"
+      ansible.verbose = "v"
       #ansible.verbose = ""
-      #ansible.start_at_task = "Install Piwik"
-      ansible.limit = "all"
+      #ansible.start_at_task = "Start Setup Instance"
+      #ansible.start_at_task = "Setup Redmine Multi-Instance"
+      #ansible.limit = "all"
+      #ansible.limit = "lmu.ansible.playbooks/redmine.retry"
       #ansible.tags = ["setup", "configuration", "update"]
       #ansible.skip_tags = ["update"]
       #ansible.ask_vault_pass = true
