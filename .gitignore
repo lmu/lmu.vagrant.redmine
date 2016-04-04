@@ -55,3 +55,6 @@ target/
 
 # Vagrant Environment
 .vagrant/
+
+# Mac specifics
+.DS_Store
