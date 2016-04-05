@@ -37,7 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     node.vm.network "forwarded_port", guest: 3000, host: 3000
     node.vm.network "forwarded_port", guest: 3001, host: 3001
-    #node.vm.network "forwarded_port", guest: 5000, host: 5000
+    node.vm.network "forwarded_port", guest: 5000, host: 5000
     node.vm.network "forwarded_port", guest: 9001, host: 9001
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".80"
     if USE_PUBLIC_NETWORK
