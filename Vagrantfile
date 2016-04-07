@@ -39,14 +39,42 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network "forwarded_port", guest: 3001, host: 3001
     node.vm.network "forwarded_port", guest: 5000, host: 5000
     node.vm.network "forwarded_port", guest: 9001, host: 9001
-    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".80"
-    if USE_PUBLIC_NETWORK
-      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".80"
+
+    if ENV['OS'] != "Windows_NT"
+      node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".80"
+      if USE_PUBLIC_NETWORK
+        node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".80"
+      end
     end
   end
 
   if ENV['OS'] != "Windows_NT"
     config.vm.provision "ansible" do |ansible|
+      #ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
+      ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
+      ansible.groups = {
+        "redmine" => ["redmine2.verwaltung.uni-muenchen.de"]
+      }
+      #ansible.verbose = "vvvv"
+      #ansible.verbose = "vvv"
+      #ansible.verbose = "vv"
+      ansible.verbose = "v"
+      #ansible.verbose = ""
+      #ansible.start_at_task = "Start Setup Instance"
+      #ansible.start_at_task = "Setup Redmine Multi-Instance"
+      #ansible.limit = "all"
+      #ansible.limit = "lmu.ansible.playbooks/redmine.retry"
+      #ansible.tags = ["setup", "configuration", "update"]
+      #ansible.skip_tags = ["update"]
+      #ansible.ask_vault_pass = true
+    end
+  end
+  if ENV['OS'] == "Windows_NT"
+    config.vm.provision "ansible_local" do |ansible|
+      ansible.version = "latest"
+      ansible.install = true
+      #ansible.provisioning_path = "/vagrant/"
+      ansible.inventory_path = "redmine_ansible_local.inventory"
       #ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
       ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
       ansible.groups = {
