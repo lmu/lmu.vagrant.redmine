@@ -1,4 +1,4 @@
 # Inventory for setup Redmine via ansible_local
 
 [redmine]
-localhost ansible_connectionlocal
+localhost ansible_connection=local
