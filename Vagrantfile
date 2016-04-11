@@ -35,8 +35,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
 
-    node.vm.network "forwarded_port", guest: 3000, host: 3000
-    node.vm.network "forwarded_port", guest: 3001, host: 3001
+    node.vm.network "forwarded_port", guest: 3000, host: 8000
+    node.vm.network "forwarded_port", guest: 3001, host: 8001
     node.vm.network "forwarded_port", guest: 5000, host: 5000
     node.vm.network "forwarded_port", guest: 9001, host: 9001
 
@@ -45,6 +45,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       if USE_PUBLIC_NETWORK
         node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".80"
       end
+    end
+    if ENV['OS'] == "Windows_NT"
+      node.vm.network "forwarded_port", guest: 80, host: 80
+      node.vm.network "forwarded_port", guest: 443, host: 443
     end
   end
 
@@ -58,7 +62,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #ansible.verbose = "vvvv"
       #ansible.verbose = "vvv"
       #ansible.verbose = "vv"
-      ansible.verbose = "v"
+      #ansible.verbose = "v"
       #ansible.verbose = ""
       #ansible.start_at_task = "Start Setup Instance"
       #ansible.start_at_task = "Setup Redmine Multi-Instance"
@@ -83,7 +87,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #ansible.verbose = "vvvv"
       #ansible.verbose = "vvv"
       #ansible.verbose = "vv"
-      ansible.verbose = "v"
+      #ansible.verbose = "v"
       #ansible.verbose = ""
       #ansible.start_at_task = "Start Setup Instance"
       #ansible.start_at_task = "Setup Redmine Multi-Instance"
