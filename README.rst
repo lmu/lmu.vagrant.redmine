@@ -63,21 +63,21 @@ Current Production State
 ------------------------
 
 Redmine Agile plugin (PRO version)Scrum and Agile project management plugin for redminehttp://redminecrm.com 	RedmineCRM 	01.03.2005
-2 	Redmine Auto Watch pluginThis plugin is a hook to add users in the issue watchers list automatically when they are involved in it. 	Teddy Lerat 	1.0.0
-3 	Redmine Checklists plugin (Light version)This is a issue checklist plugin for Redminehttp://redminecrm.com 	RedmineCRM 	3.0.1
-4 	Redmine CRM plugin (PRO version)This is a CRM plugin for Redmine that can be used to track contacts and deals informationhttp://redminecrm.com 	RedmineCRM 	03.04.2004
-5 	Redmine Helpdesk plugin (PRO version)This is a Helpdesk plugin for Redminehttp://redminecrm.com 	RedmineCRM 	02.03.2000
-6 	Did You Mean?A plugin to search for duplicate issues before opening them.http://www.github.com/abahgat/redmine_didyoumean 	Alessandro Bahgat and Mattia Tommasone 	01.02.2000
-7 	Redmine Favorite Projects pluginThis is a favorite projects plugin for Redminehttps://github.com/alexandermeindl/redmine_favorite_projects 	RedmineCRM, AlphaNodes GmbH 	1.0.3
-8 	Redmine Issue Templates pluginPlugin to generate and use issue templates for each project to assist issue creation.https://bitbucket.org/akiko_pusu/redmine_issue_templates 	Akiko Takano 	0.0.9
-9 	KnowledgebaseA plugin for Redmine that adds knowledgebase functionalityhttps://github.com/alexbevi/redmine_knowledgebase 	Alex Bevilacqua 	3.0.4
-10 	Redmine LMU modifications pluginCustomizing for LMU Redmine 	AlphaNodes GmbH 	0.0.1
-11 	Redmine Local Avatars pluginThis plugin lets users upload avatars directly into Redmine 	Andrew Chaika and Luca Pireddu 	0.1.1
-12 	Redmine Spent Time ColumnThis plugin adds a spent time column to issue lists. 	Jan Schulz-Hofen, Planio GmbH 	2.0.0-devel
-13 	Redmine TweaksWiki and content extensionshttp://github.com/alexandermeindl/redmine_tweaks 	AlphaNodes GmbH 	0.4.8
-14 	Redmine Wiki Extensions pluginThis is a Wiki Extensions plugin for Redminehttp://www.r-labs.org/projects/r-labs/wiki/Wiki_Extensions_en 	Haruyuki Iida 	0.6.4
-15 	Redmine Wiki Lists pluginwiki macros to display lists of contents.http://www.r-labs.org/projects/wiki_lists/wiki/Wiki_Lists 	Tomohisa Kusukawa 	0.0.3
-16 	Sidebar Hide PluginThis plugin provides ability to hide sidebarhttps://github.com/bdemirkir/sidebar_hide 	Berk Demirkır 	0.0.7
+Redmine Auto Watch pluginThis plugin is a hook to add users in the issue watchers list automatically when they are involved in it. 	Teddy Lerat 	1.0.0
+Redmine Checklists plugin (Light version)This is a issue checklist plugin for Redminehttp://redminecrm.com 	RedmineCRM 	3.0.1
+Redmine CRM plugin (PRO version)This is a CRM plugin for Redmine that can be used to track contacts and deals informationhttp://redminecrm.com 	RedmineCRM 	03.04.2004
+Redmine Helpdesk plugin (PRO version)This is a Helpdesk plugin for Redminehttp://redminecrm.com 	RedmineCRM 	02.03.2000
+Did You Mean?A plugin to search for duplicate issues before opening them.http://www.github.com/abahgat/redmine_didyoumean 	Alessandro Bahgat and Mattia Tommasone 	01.02.2000
+Redmine Favorite Projects pluginThis is a favorite projects plugin for Redminehttps://github.com/alexandermeindl/redmine_favorite_projects 	RedmineCRM, AlphaNodes GmbH 	1.0.3
+Redmine Issue Templates pluginPlugin to generate and use issue templates for each project to assist issue creation.https://bitbucket.org/akiko_pusu/redmine_issue_templates 	Akiko Takano 	0.0.9
+KnowledgebaseA plugin for Redmine that adds knowledgebase functionalityhttps://github.com/alexbevi/redmine_knowledgebase 	Alex Bevilacqua 	3.0.4
+Redmine LMU modifications pluginCustomizing for LMU Redmine 	AlphaNodes GmbH 	0.0.1
+Redmine Local Avatars pluginThis plugin lets users upload avatars directly into Redmine 	Andrew Chaika and Luca Pireddu 	0.1.1
+Redmine Spent Time ColumnThis plugin adds a spent time column to issue lists. 	Jan Schulz-Hofen, Planio GmbH 	2.0.0-devel
+Redmine TweaksWiki and content extensionshttp://github.com/alexandermeindl/redmine_tweaks 	AlphaNodes GmbH 	0.4.8
+Redmine Wiki Extensions pluginThis is a Wiki Extensions plugin for Redminehttp://www.r-labs.org/projects/r-labs/wiki/Wiki_Extensions_en 	Haruyuki Iida 	0.6.4
+Redmine Wiki Lists pluginwiki macros to display lists of contents.http://www.r-labs.org/projects/wiki_lists/wiki/Wiki_Lists 	Tomohisa Kusukawa 	0.0.3
+Sidebar Hide PluginThis plugin provides ability to hide sidebarhttps://github.com/bdemirkir/sidebar_hide 	Berk Demirkır 	0.0.7
 
 ===== ===== ===== ===== ===== ===== ===== =====
 Plugin name 	Plugin title 	Provider 	Version 	Prio 	Kommentar
@@ -140,6 +140,15 @@ State of 2016-04-06
 * Implementation of 'memcached' Server
 * Configuration of Redmine Instance based cache:store via dalli
 
+
+Todos für heute
++++++++++++++++
+
+* Überblick über Plugins verschaffen
+* Betriebskonzept formulieren
+* Aktuelles Setup beschreiben
+* redminetest2 bespielen
+
 State of 2016-04-07
 ...................
 
@@ -151,16 +160,12 @@ TODOs
 
 
 
-== Arbeitstreffen 7.4.2016 ==
 
 
-Todos für heute:
-* Überblick über Plugins verschaffen
-* Betriebskonzept formulieren
-* Aktuelles Setup beschreiben
-* redminetest2 bespielen
 
-== Probleme ==
+Probleme
+--------
+
 * Grundproblem: Redmine 3.2 hat nicht funktioniert -> zurück auf 3.1 mit 5 Plugins --> läuft auf Entwicklungsrechner
 * bei Bespielen von redminetest2:
 * svn checkout geht nicht (Proxy-Problem, curl geht)
@@ -172,13 +177,19 @@ Workaround: gem-cache und plugins kopieren auf ansible-master
 redminmetest2
 (A) http/https müssen offen sein --> Alexander klärt das mit Subur/Andrej
 
-== Ausblick (Perspektive von Jan) ==
-* der redminetest2 sollte vor Alexanders langem Urlaub in einem definierten und funktionablen Zustand sein, bei dem grundsätzlich ein Weiterarbeiten ohne Ansible möglich ist:
+
+Ausblick (Perspektive von Jan)
+------------------------------
+
+* Server redminetest2 sollte vor Alexanders langem Urlaub in einem definierten und funktionablen Zustand sein, bei dem grundsätzlich ein Weiterarbeiten ohne Ansible möglich ist:
 Mindestanforderungen:
 * Redmine 3.1 inklusive der notwendigen Plugins
 * überführte Daten aus dem redminetest1 samt update der Applikation auf 3.1
 
-== Offene Fragen zum Betriebskonzept ==
+
+Offene Fragen zum Betriebskonzept
+---------------------------------
+
 * Welche Infrastrukturkomponenten und Arbeitswerkzeuge sind für Entwicklung und Betrieb notwendig?
 * Ist die Ansible-Infrastruktur für den allgemeinen Betrieb ausgelegt/verfügbar, so dass andere Kollegen im Dezernat damit arbeiten können?
 * Gibt es alternative Möglichkeiten, im Notfall auch ohne Ansible modifikationen am Redmine-Server vorzunehmen? Kann man zur Not auch lokal auf dem redminetest2 arbeiten und die Abweichungen später wieder einfangen?
