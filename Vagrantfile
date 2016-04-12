@@ -22,9 +22,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "ubuntu/trusty64"
   #config.vm.box = "ubuntu/xenial64"
 
-  config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: true do |node|
+  config.vm.define "redmine2.verwaltung.uni-muenchen.de", autostart: false do |node|
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Redmine2"
+      vb.memory = 8192
+      #vb.memory = 4096
+      vb.cpus = 8
+      #vb.cpus = 4
+      vb.customize ["modifyvm", :id,
+                    "--cpuexecutioncap", "50",
+                    "--groups", "/Vagrant/LMU/Redmine"
+                   ]
+    end
+
+    if ENV['OS'] != "Windows_NT"
+      node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".80"
+      if USE_PUBLIC_NETWORK
+        node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".80"
+      end
+    end
+  end
+
+  config.vm.define "redminetest2.verwaltung.uni-muenchen.de", primary: true, autostart: true do |node|
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "RedmineTest2"
       vb.memory = 8192
       #vb.memory = 4096
       vb.cpus = 8
@@ -38,6 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network "forwarded_port", guest: 3000, host: 8000
     node.vm.network "forwarded_port", guest: 3001, host: 8001
     node.vm.network "forwarded_port", guest: 5000, host: 5000
+    node.vm.network "forwarded_port", guest: 5432, host: 5432
     node.vm.network "forwarded_port", guest: 9001, host: 9001
 
     if ENV['OS'] != "Windows_NT"
@@ -57,7 +79,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
       ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
       ansible.groups = {
-        "redmine" => ["redmine2.verwaltung.uni-muenchen.de"]
+        "redmine" => ["redmine2.verwaltung.uni-muenchen.de",
+                      "redminetest2.verwaltung.uni-muenchen.de"]
       }
       #ansible.verbose = "vvvv"
       #ansible.verbose = "vvv"
@@ -82,7 +105,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       #ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
       ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
       ansible.groups = {
-        "redmine" => ["redmine2.verwaltung.uni-muenchen.de"]
+        "redmine" => ["redmine2.verwaltung.uni-muenchen.de",
+                      "redminetest2.verwaltung.uni-muenchen.de"]
       }
       #ansible.verbose = "vvvv"
       #ansible.verbose = "vvv"
