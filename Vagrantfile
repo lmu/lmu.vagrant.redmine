@@ -13,8 +13,6 @@ PUBLIC_NETWORK_BASE = "137.193.211"
 #PUBLIC_NETWORK_BASE = "192.168.2"
 AUTOSTART_SECONDARY = false
 #AUTOSTART_SECONDARY = true
-AUTOSTART_INFRASTRUKTURE = false
-#AUTOSTART_INFRASTRUKTURE = true
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -24,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.forward_agent = true
 
-  config.vm.define "redmine2.verwaltung.uni-muenchen.de", autostart: true do |node|
+  config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: true, autostart: true do |node|
     node.vm.box = "ubuntu/trusty64"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Redmine2"
@@ -41,7 +39,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define "redminetest2.verwaltung.uni-muenchen.de", primary: true, autostart: true do |node|
+  config.vm.define "redminetest2.verwaltung.uni-muenchen.de", autostart: AUTOSTART_SECONDARY do |node|
     node.vm.box = "ubuntu/trusty64"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "RedmineTest2"
@@ -59,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define "redminetest3.verwaltung.uni-muenchen.de", autostart: true do |node|
+  config.vm.define "redminetest3.verwaltung.uni-muenchen.de", autostart: AUTOSTART_SECONDARY do |node|
     node.vm.box = "ubuntu/xenial64"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "RedmineTest3"
@@ -78,7 +76,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
 
-  config.vm.define "redminetest4.verwaltung.uni-muenchen.de", autostart: true do |node|
+  config.vm.define "redminetest4.verwaltung.uni-muenchen.de", autostart: AUTOSTART_SECONDARY do |node|
     node.vm.box = "centos/7"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "RedmineTest4"
