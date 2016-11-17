@@ -21,9 +21,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #config.vm.box = "ubuntu/xenial64"
 
   config.ssh.forward_agent = true
+  #config.ssh.private_key_path = "~/.ssh/id_rsa"
 
   config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: true, autostart: true do |node|
     node.vm.box = "ubuntu/trusty64"
+    #node.vm.box = "ubuntu/xenial64"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Redmine2"
       vb.memory = 8192
@@ -95,8 +97,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "ansible" do |ansible|
-    #ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
-    #ansible.playbook = "lmu.ansible.playbooks/redmine25.yml"
+    ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
+  end
+  config.vm.provision "ansible" do |ansible|
     ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
     ansible.groups = {
       "redmine-dbs-production" => ["redmine2.verwaltung.uni-muenchen.de"],
@@ -130,8 +133,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     #ansible.limit = "lmu.ansible.playbooks/redmine.retry"
     #ansible.tags = ["setup", "configuration", "update"]
     #ansible.skip_tags = ["update"]
-    #ansible.ask_vault_pass = true
-  end
+    ansible.extra_vars = {
+      #ansible_ssh_user: 'ubuntu',
+      ansible_ssh_user: 'ansible',
+      ansible_connection: 'ssh',
+      ansible_ssh_args: '-o ForwardAgent=yes',
+      ansible_ssh_private_key_file: ['~/.ssh/id_rsa']
+    }
 
+  end
 
 end
