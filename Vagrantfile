@@ -140,7 +140,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible_ssh_args: '-o ForwardAgent=yes',
       ansible_ssh_private_key_file: ['~/.ssh/id_rsa']
     }
-
   end
 
 end
