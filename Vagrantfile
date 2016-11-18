@@ -98,6 +98,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
+    #ansible.verbose = "vvv"
   end
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
