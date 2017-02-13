@@ -139,6 +139,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "bootstrap", type: "shell" do |s|
     s.inline = "echo Bootstrap Machine"
   end
+  config.vm.provision "ssh-key", type: "shell", privileged: false do |s|
+    ssh_pub_key = File.readlines("#{Dir.home}/.ssh/id_rsa.pub").first.strip
+    s.inline = <<-SHELL
+      echo #{ssh_pub_key} >> ~/.ssh/authorized_keys
+    SHELL
+  end
   config.vm.provision "base-preseed", type: "ansible" do |ansible|
     ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
     #ansible.verbose = "vvv"
