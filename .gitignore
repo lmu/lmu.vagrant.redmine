@@ -58,6 +58,7 @@ target/
 copy/
 graph/
 hosts
+id_rsa.pub
 
 # Mac specifics
 .DS_Store
