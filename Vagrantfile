@@ -24,6 +24,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
   #config.ssh.private_key_path = "~/.ssh/id_rsa"
 
+  # Disable SharedFolder by default.
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
   config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: false, autostart: AUTOSTART_SECONDARY do |node|
     node.vm.box = "ubuntu/trusty64"
 
@@ -53,7 +56,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     "--groups", "/Vagrant/LMU/Redmine"
                    ]
     end
-
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".87"
     if USE_PUBLIC_NETWORK
       node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".87"
@@ -87,7 +89,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     "--groups", "/Vagrant/LMU/Redmine"
                    ]
     end
-
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".88"
     if USE_PUBLIC_NETWORK
       node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".88"
@@ -104,6 +105,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     "--cpuexecutioncap", "50",
                     "--groups", "/Vagrant/LMU/Redmine"
                    ]
+    end
+    config.vm.provision "bootstrap", type: "shell" do |s|
+      s.inline = "echo Bootstrap Machine; apt install -y python aptitude"
     end
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".84"
     if USE_PUBLIC_NETWORK
@@ -123,12 +127,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
 
+    config.vm.provision "bootstrap", type: "shell" do |s|
+      s.inline = "echo Bootstrap Machine; apt install -y python aptitude"
+    end
+
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".89"
     if USE_PUBLIC_NETWORK
       node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".89"
     end
   end
-
+  config.vm.provision "bootstrap", type: "shell" do |s|
+    s.inline = "echo Bootstrap Machine"
+  end
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
     #ansible.verbose = "vvv"
