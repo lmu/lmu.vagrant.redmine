@@ -126,16 +126,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     "--groups", "/Vagrant/LMU/Redmine"
                    ]
     end
-
     config.vm.provision "bootstrap", type: "shell" do |s|
       s.inline = "echo Bootstrap Machine; apt install -y python aptitude"
     end
-
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".89"
     if USE_PUBLIC_NETWORK
       node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".89"
     end
   end
+
   config.vm.provision "bootstrap", type: "shell" do |s|
     s.inline = "echo Bootstrap Machine"
   end
