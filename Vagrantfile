@@ -139,51 +139,55 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "bootstrap", type: "shell" do |s|
     s.inline = "echo Bootstrap Machine"
   end
-  config.vm.provision "ansible" do |ansible|
+  config.vm.provision "base-preseed", type: "ansible" do |ansible|
     ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
     #ansible.verbose = "vvv"
   end
-#  config.vm.provision "ansible" do |ansible|
-#    ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
-#    ansible.groups = {
-#      "redmine-dbs-production" => ["redmine2.verwaltung.uni-muenchen.de"],
-#      "redmine-dbs-staging" => ["redminetest2.verwaltung.uni-muenchen.de",
-#                                "redminetest3.verwaltung.uni-muenchen.de",
-#                                "redminetest4.verwaltung.uni-muenchen.de"],
-#      "redmine-dbs:children" => ["redmine-dbs-production",
-#                                 "redmine-dbs-staging"],
-#      "redmine-workers-production" => ["redmine2.verwaltung.uni-muenchen.de"],
-#      "redmine-workers-staging" => ["redminetest2.verwaltung.uni-muenchen.de",
-#                                    "redminetest3.verwaltung.uni-muenchen.de",
-#                                    "redminetest4.verwaltung.uni-muenchen.de"],
-#      "redmine-workers:children" => ["redmine-workers-production",
-#                                     "redmine-workers-staging"],
-#      "redmine-frontends-production" => ["redmine2.verwaltung.uni-muenchen.de"],
-#      "redmine-frontends-staging" => ["redminetest2.verwaltung.uni-muenchen.de",
-#                                      "redminetest3.verwaltung.uni-muenchen.de",
-#                                      "redminetest4.verwaltung.uni-muenchen.de"],
-#      "redmine-frontends:children" => ["redmine-frontends-production",
-#                                       "redmine-frontends-staging"],
-#    }
-#    #ansible.verbose = "vvvv"
-#    #ansible.verbose = "vvv"
-#    #ansible.verbose = "vv"
-#    #ansible.verbose = "v"
-#    #ansible.verbose = ""
-#    #ansible.start_at_task = "Start Setup Instance"
-#    #ansible.start_at_task = "Setup Redmine Multi-Instance"
-#    #ansible.start_at_task = "Finish Setup"
-#    #ansible.limit = "all"
-#    #ansible.limit = "lmu.ansible.playbooks/redmine.retry"
-#    #ansible.tags = ["setup", "configuration", "update"]
-#    #ansible.skip_tags = ["update"]
-#    ansible.extra_vars = {
-#      #ansible_ssh_user: 'ubuntu',
-#      ansible_ssh_user: 'ansible',
-#      ansible_connection: 'ssh',
-#      ansible_ssh_args: '-o ForwardAgent=yes',
-#      ansible_ssh_private_key_file: ['~/.ssh/id_rsa']
-#    }
-#  end
+ config.vm.provision "application", type: "ansible" do |ansible|
+   ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
+   ansible.groups = {
+     "redmine-dbs-production" => ["redmine2.verwaltung.uni-muenchen.de",
+                                  "redmine3.verwaltung.uni-muenchen.de",
+                                  "redmine4.verwaltung.uni-muenchen.de"],
+     "redmine-dbs-staging" => ["redminetest2.verwaltung.uni-muenchen.de",
+                               "redminetest3.verwaltung.uni-muenchen.de",
+                               "redminetest4.verwaltung.uni-muenchen.de"],
+     "redmine-dbs:children" => ["redmine-dbs-production",
+                                "redmine-dbs-staging"],
+     "redmine-workers-production" => ["redmine2.verwaltung.uni-muenchen.de",
+                                      "redmine3.verwaltung.uni-muenchen.de",
+                                      "redmine4.verwaltung.uni-muenchen.de"],
+     "redmine-workers-staging" => ["redminetest2.verwaltung.uni-muenchen.de",
+                                   "redminetest3.verwaltung.uni-muenchen.de",
+                                   "redminetest4.verwaltung.uni-muenchen.de"],
+     "redmine-workers:children" => ["redmine-workers-production",
+                                    "redmine-workers-staging"],
+     "redmine-frontends-production" => ["redmine2.verwaltung.uni-muenchen.de",
+                                        "redmine3.verwaltung.uni-muenchen.de",
+                                        "redmine4.verwaltung.uni-muenchen.de"],
+     "redmine-frontends-staging" => ["redminetest2.verwaltung.uni-muenchen.de",
+                                     "redminetest3.verwaltung.uni-muenchen.de",
+                                     "redminetest4.verwaltung.uni-muenchen.de"],
+     "redmine-frontends:children" => ["redmine-frontends-production",
+                                      "redmine-frontends-staging"],
+   }
+   #ansible.verbose = "vvvv"
+   #ansible.verbose = "vvv"
+   #ansible.verbose = "vv"
+   #ansible.verbose = "v"
+   #ansible.verbose = ""
+   #ansible.start_at_task = "Start Setup Instance"
+   #ansible.start_at_task = "Setup Redmine Multi-Instance"
+   #ansible.start_at_task = "Finish Setup"
+   #ansible.limit = "all"
+   #ansible.limit = "lmu.ansible.playbooks/redmine.retry"
+   #ansible.tags = ["setup", "configuration", "update"]
+   #ansible.skip_tags = ["update"]
+   ansible.extra_vars = {
+     ansible_connection: 'ssh',
+     ansible_ssh_args: '-o ForwardAgent=yes',
+     ansible_ssh_private_key_file: ['~/.ssh/id_rsa']
+   }
+ end
 
 end
