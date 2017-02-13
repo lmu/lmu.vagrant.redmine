@@ -19,13 +19,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "ubuntu/trusty64"
   #config.vm.box = "ubuntu/xenial64"
+  #config.vm.box = "centos/7"
 
   config.ssh.forward_agent = true
   #config.ssh.private_key_path = "~/.ssh/id_rsa"
 
-  config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: true, autostart: true do |node|
+  config.vm.define "redmine2.verwaltung.uni-muenchen.de", primary: false, autostart: AUTOSTART_SECONDARY do |node|
     node.vm.box = "ubuntu/trusty64"
-    #node.vm.box = "ubuntu/xenial64"
+
     node.vm.provider "virtualbox" do |vb|
       vb.name = "Redmine2"
       vb.memory = 8192
@@ -35,9 +36,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     "--groups", "/Vagrant/LMU/Redmine"
                    ]
     end
-    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".80"
+    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".82"
     if USE_PUBLIC_NETWORK
-      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".80"
+      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".82"
     end
   end
 
@@ -53,14 +54,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
 
-    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".85"
+    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".87"
     if USE_PUBLIC_NETWORK
-      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".85"
+      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".87"
     end
   end
 
+  config.vm.define "redmine3.verwaltung.uni-muenchen.de", primary: true, autostart: true do |node|
+    node.vm.box = "centos/7"
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "Redmine3"
+      vb.memory = 8192
+      vb.cpus = 8
+      vb.customize ["modifyvm", :id,
+                    "--cpuexecutioncap", "50",
+                    "--groups", "/Vagrant/LMU/Redmine"
+                   ]
+    end
+    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".83"
+    if USE_PUBLIC_NETWORK
+      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".83"
+    end
+  end
   config.vm.define "redminetest3.verwaltung.uni-muenchen.de", autostart: AUTOSTART_SECONDARY do |node|
-    node.vm.box = "ubuntu/xenial64"
+    node.vm.box = "centos/7"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "RedmineTest3"
       vb.memory = 8192
@@ -71,15 +88,31 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
 
-    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".86"
+    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".88"
     if USE_PUBLIC_NETWORK
-      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".86"
+      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".88"
     end
   end
 
+  config.vm.define "redmine4.verwaltung.uni-muenchen.de", primary: false, autostart: AUTOSTART_SECONDARY do |node|
+    node.vm.box = "ubuntu/xenial64"
+    node.vm.provider "virtualbox" do |vb|
+      vb.name = "Redmine4"
+      vb.memory = 8192
+      vb.cpus = 8
+      vb.customize ["modifyvm", :id,
+                    "--cpuexecutioncap", "50",
+                    "--groups", "/Vagrant/LMU/Redmine"
+                   ]
+    end
+    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".84"
+    if USE_PUBLIC_NETWORK
+      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".84"
+    end
+  end
 
   config.vm.define "redminetest4.verwaltung.uni-muenchen.de", autostart: AUTOSTART_SECONDARY do |node|
-    node.vm.box = "centos/7"
+    node.vm.box = "ubuntu/xenial64"
     node.vm.provider "virtualbox" do |vb|
       vb.name = "RedmineTest4"
       vb.memory = 8192
@@ -90,9 +123,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
 
-    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".87"
+    node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".89"
     if USE_PUBLIC_NETWORK
-      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".87"
+      node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".89"
     end
   end
 
