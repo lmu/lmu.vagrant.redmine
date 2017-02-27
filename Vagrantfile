@@ -14,6 +14,12 @@ PUBLIC_NETWORK_BASE = "137.193.211"
 AUTOSTART_SECONDARY = false
 #AUTOSTART_SECONDARY = true
 
+$UBUNTU_XENIAL_BOOTSTRAP_SCRIPT = <<SCRIPT
+echo "Bootstrap Ubuntu 16.04 Machine"
+apt install -y python aptitude
+SCRIPT
+
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Every Vagrant virtual environment requires a box to build off of.
@@ -73,6 +79,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                     "--groups", "/Vagrant/LMU/Redmine"
                    ]
     end
+    node.vm.network "forwarded_port", guest: 3000, host: 3000
+    node.vm.network "forwarded_port", guest: 80,   host: 18080
+    node.vm.network "forwarded_port", guest: 443,  host: 18443
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".83"
     if USE_PUBLIC_NETWORK
       node.vm.network :public_network, ip: PUBLIC_NETWORK_BASE + ".83"
@@ -107,7 +116,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
     config.vm.provision "bootstrap", type: "shell" do |s|
-      s.inline = "echo Bootstrap Machine; apt install -y python aptitude"
+      s.inline = $UBUNTU_XENIAL_BOOTSTRAP_SCRIPT
     end
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".84"
     if USE_PUBLIC_NETWORK
@@ -127,7 +136,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
                    ]
     end
     config.vm.provision "bootstrap", type: "shell" do |s|
-      s.inline = "echo Bootstrap Machine; apt install -y python aptitude"
+      s.inline = $UBUNTU_XENIAL_BOOTSTRAP_SCRIPT
     end
     node.vm.network :private_network, ip: PRIVATE_NETWORK_BASE + ".89"
     if USE_PUBLIC_NETWORK
@@ -148,7 +157,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
     #ansible.verbose = "vvv"
   end
- config.vm.provision "application", type: "ansible" do |ansible|
+ config.vm.provision "application", type: "ansible" do |ansible| # run: "never"
    ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
    ansible.groups = {
      "redmine-dbs-production" => ["redmine2.verwaltung.uni-muenchen.de",
@@ -181,8 +190,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
    #ansible.verbose = "vv"
    #ansible.verbose = "v"
    #ansible.verbose = ""
-   #ansible.start_at_task = "Start Setup Instance"
+   #ansible.start_at_task = "Start Setup Instances"
    #ansible.start_at_task = "Setup Redmine Multi-Instance"
+   #ansible.start_at_task = "Create DB User"
+   #ansible.stop_at_task = "Create DB User"
    #ansible.start_at_task = "Finish Setup"
    #ansible.limit = "all"
    #ansible.limit = "lmu.ansible.playbooks/redmine.retry"
