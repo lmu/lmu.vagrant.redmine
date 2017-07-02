@@ -19,8 +19,8 @@ Nicht zu migrierende Instanzen
 Termin
 ======
 
-* 13.06.2017
-* 27.06.2017 (Alternativ Termin)
+* 13.07.2017
+* 27.07.2017 (Alternativ Termin)
 
 Schritte
 ========
