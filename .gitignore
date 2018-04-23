@@ -62,3 +62,6 @@ id_rsa.pub
 
 # Mac specifics
 .DS_Store
+
+# LMU Specifics
+lmu.ansible.playbooks
