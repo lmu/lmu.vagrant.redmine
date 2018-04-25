@@ -154,10 +154,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     SHELL
   end
   config.vm.provision "base-preseed", type: "ansible" do |ansible|
+    ansible.compatibility_mode = "2.0"
     ansible.playbook = "lmu.ansible.playbooks/base-preseed.yml"
     #ansible.verbose = "vvv"
   end
   config.vm.provision "application", type: "ansible" do |ansible| # run: "never"
+    ansible.compatibility_mode = "2.0"
     ansible.playbook = "lmu.ansible.playbooks/redmine.yml"
     ansible.groups = {
       "redmine-dbs-production" => ["redmine2.verwaltung.uni-muenchen.de",
